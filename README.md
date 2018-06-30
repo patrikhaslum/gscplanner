@@ -5,7 +5,7 @@ For a full description of the planner, see "Extending Classical
 Planning with State Constraints: Heuristics and Search for Optimal
 Planning" (Patrik Haslum, Franc Ivankovic, Miquel Ramirez, Dan Gordon,
 Sylvie Thiebaux, Vikas Shivashankar and Dana S. Nau, Journal of AI
-Research, vol. NN, pages NNN-NNN, 2018).
+Research, vol. 62, pages 373-431, 2018).
 
 ## Setup
 
