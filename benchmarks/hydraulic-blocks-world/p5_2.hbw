@@ -1,0 +1,25 @@
+5
+4
+initial_state
+gripper_empty
+block_on_piston 0
+block_in_cylinder 0 0
+block_in_cylinder 2 0
+block_on_block 2 0
+block_clear 2
+block_on_piston 1
+block_in_cylinder 1 1
+block_clear 1
+block_on_piston 3
+block_in_cylinder 3 2
+block_clear 3
+block_on_piston 4
+block_in_cylinder 4 3
+block_clear 4
+goal
+block_on_piston 0
+block_on_piston 1
+block_on_piston 2
+block_on_block 3 2
+block_on_piston 4
+end

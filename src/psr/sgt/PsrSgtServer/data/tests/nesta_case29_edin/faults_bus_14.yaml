@@ -1,0 +1,111 @@
+---
+- matpower:
+    input_file: data/nesta_mod/nesta_case29_edin.m
+    default_kV_base: 11
+- psr:
+    use_socp: true
+    bus_faults:
+      - id: bus_14
+    bus_optional_final_fed:
+      - id: bus_14
+    branch_breakers:
+      - {id: branch_00_bus_01_bus_02, init_closed: true}
+      - {id: branch_01_bus_01_bus_03, init_closed: true}
+      - {id: branch_02_bus_01_bus_02, init_closed: true}
+      - {id: branch_03_bus_01_bus_03, init_closed: true}
+      - {id: branch_04_bus_02_bus_04, init_closed: true}
+      - {id: branch_05_bus_02_bus_04, init_closed: true}
+      - {id: branch_06_bus_04_bus_07, init_closed: true}
+      - {id: branch_07_bus_04_bus_06, init_closed: true}
+      - {id: branch_08_bus_04_bus_06, init_closed: true}
+      - {id: branch_09_bus_04_bus_05, init_closed: true}
+      - {id: branch_10_bus_04_bus_05, init_closed: true}
+      - {id: branch_11_bus_04_bus_07, init_closed: true}
+      - {id: branch_12_bus_05_bus_06, init_closed: true}
+      - {id: branch_13_bus_05_bus_06, init_closed: true}
+      - {id: branch_14_bus_06_bus_09, init_closed: true}
+      - {id: branch_15_bus_06_bus_09, init_closed: true}
+      - {id: branch_16_bus_07_bus_08, init_closed: true}
+      - {id: branch_17_bus_07_bus_08, init_closed: true}
+      - {id: branch_18_bus_07_bus_06, init_closed: true}
+      - {id: branch_19_bus_07_bus_06, init_closed: true}
+      - {id: branch_20_bus_08_bus_10, init_closed: true}
+      - {id: branch_21_bus_08_bus_10, init_closed: true}
+      - {id: branch_22_bus_09_bus_11, init_closed: true}
+      - {id: branch_23_bus_09_bus_11, init_closed: true}
+      - {id: branch_24_bus_09_bus_10, init_closed: true}
+      - {id: branch_25_bus_09_bus_10, init_closed: true}
+      - {id: branch_26_bus_10_bus_15, init_closed: true}
+      - {id: branch_27_bus_10_bus_15, init_closed: true}
+      - {id: branch_28_bus_11_bus_15, init_closed: true}
+      - {id: branch_29_bus_11_bus_15, init_closed: true}
+      - {id: branch_30_bus_11_bus_13, init_closed: false}
+      - {id: branch_31_bus_11_bus_13, init_closed: false}
+      - {id: branch_32_bus_11_bus_12, init_closed: true}
+      - {id: branch_33_bus_11_bus_12, init_closed: true}
+      - {id: branch_34_bus_12_bus_13, init_closed: false}
+      - {id: branch_35_bus_12_bus_18, init_closed: true}
+      - {id: branch_36_bus_12_bus_18, init_closed: true}
+      - {id: branch_37_bus_12_bus_13, init_closed: false}
+      - {id: branch_38_bus_13_bus_18, init_closed: false}
+      - {id: branch_39_bus_13_bus_18, init_closed: false}
+      - {id: branch_40_bus_13_bus_15, init_closed: false}
+      - {id: branch_41_bus_13_bus_15, init_closed: false}
+      - {id: branch_42_bus_13_bus_14, init_closed: true}
+      - {id: branch_43_bus_13_bus_14, init_closed: true}
+      - {id: branch_44_bus_14_bus_16, init_closed: false}
+      - {id: branch_45_bus_14_bus_16, init_closed: false}
+      - {id: branch_46_bus_15_bus_16, init_closed: true}
+      - {id: branch_47_bus_15_bus_16, init_closed: true}
+      - {id: branch_48_bus_15_bus_14, init_closed: false}
+      - {id: branch_49_bus_15_bus_14, init_closed: false}
+      - {id: branch_50_bus_16_bus_19, init_closed: true}
+      - {id: branch_51_bus_16_bus_19, init_closed: true}
+      - {id: branch_52_bus_17_bus_16, init_closed: true}
+      - {id: branch_53_bus_17_bus_16, init_closed: true}
+      - {id: branch_54_bus_17_bus_22, init_closed: true}
+      - {id: branch_55_bus_17_bus_22, init_closed: true}
+      - {id: branch_56_bus_18_bus_17, init_closed: true}
+      - {id: branch_57_bus_18_bus_17, init_closed: true}
+      - {id: branch_58_bus_18_bus_23, init_closed: true}
+      - {id: branch_59_bus_18_bus_23, init_closed: true}
+      - {id: branch_60_bus_20_bus_26, init_closed: true}
+      - {id: branch_61_bus_20_bus_26, init_closed: true}
+      - {id: branch_62_bus_20_bus_19, init_closed: true}
+      - {id: branch_63_bus_20_bus_19, init_closed: true}
+      - {id: branch_64_bus_21_bus_16, init_closed: true}
+      - {id: branch_65_bus_21_bus_16, init_closed: true}
+      - {id: branch_66_bus_21_bus_25, init_closed: true}
+      - {id: branch_67_bus_21_bus_25, init_closed: true}
+      - {id: branch_68_bus_21_bus_20, init_closed: true}
+      - {id: branch_69_bus_21_bus_20, init_closed: true}
+      - {id: branch_70_bus_21_bus_19, init_closed: true}
+      - {id: branch_71_bus_21_bus_19, init_closed: true}
+      - {id: branch_72_bus_22_bus_16, init_closed: true}
+      - {id: branch_73_bus_22_bus_16, init_closed: true}
+      - {id: branch_74_bus_22_bus_25, init_closed: true}
+      - {id: branch_75_bus_22_bus_25, init_closed: true}
+      - {id: branch_76_bus_22_bus_21, init_closed: true}
+      - {id: branch_77_bus_22_bus_21, init_closed: true}
+      - {id: branch_78_bus_23_bus_29, init_closed: true}
+      - {id: branch_79_bus_23_bus_24, init_closed: true}
+      - {id: branch_80_bus_23_bus_24, init_closed: true}
+      - {id: branch_81_bus_23_bus_22, init_closed: true}
+      - {id: branch_82_bus_23_bus_22, init_closed: true}
+      - {id: branch_83_bus_23_bus_29, init_closed: true}
+      - {id: branch_84_bus_24_bus_28, init_closed: true}
+      - {id: branch_85_bus_24_bus_25, init_closed: true}
+      - {id: branch_86_bus_24_bus_25, init_closed: true}
+      - {id: branch_87_bus_24_bus_28, init_closed: true}
+      - {id: branch_88_bus_25_bus_26, init_closed: true}
+      - {id: branch_89_bus_25_bus_26, init_closed: true}
+      - {id: branch_90_bus_27_bus_26, init_closed: true}
+      - {id: branch_91_bus_27_bus_26, init_closed: true}
+      - {id: branch_92_bus_28_bus_27, init_closed: true}
+      - {id: branch_93_bus_28_bus_27, init_closed: true}
+      - {id: branch_94_bus_29_bus_28, init_closed: true}
+      - {id: branch_95_bus_29_bus_28, init_closed: true}
+      - {id: branch_96_bus_03_bus_04, init_closed: true}
+      - {id: branch_97_bus_03_bus_04, init_closed: true}
+      - {id: branch_98_bus_03_bus_02, init_closed: true}
+...

@@ -1,0 +1,38 @@
+
+This repository contains several parts, which are distributed under
+different terms:
+
+*   The "global state constraints planner" (everything in the src/
+    subdirectory, excluding the src/psr/sgt/PsrSgtServer subdirectory,
+    and everything in the benchmarks subdirectory) is licensed under
+    the GNU General Public License as published by the Free Software
+    Foundation, either version 3 of the License, or (at your option)
+    any later version.
+
+    The global state constraints planner was written with
+    contributions by Franc Ivankovic, Miquel Ramirez, Dan Gordon,
+    Patrik Haslum, Sylvie Thiebaux, Vikas Shivashankar and Dana
+    Nau. It incorporates parts of pyperplan
+    (https://bitbucket.org/malte/pyperplan).
+
+*   The "PSR server" (everything in the src/psr/sgt/PsrSgtServer
+    subdirectory, except popfExternalSolver.h, psr_ext_solver.h and
+    psr_ext_solver.cc) is licensed under the Apache License Version
+    2.0.
+
+    The PSR server was written by Dan Gordon.
+
+*   The "POPF-TIF plugin" is licensed under the GNU General Public
+    License as published by the Free Software Foundation, either
+    version 3 of the License, or (at your option) any later version.
+
+    The POPF-TIF plugin was written by Patrik Haslum. It incorporates
+    the popfExternalSolver.h header file which is part of the POPF-TIF
+    planner (https://github.com/chiarapiacentini/popf-tif).
+
+
+A copy of the GNU General Public License version 3 is provided in the
+file gpl.txt, and also available from http://www.gnu.org/licenses/.
+
+A copy of the Apache License Version 2.0 is provided in the file
+apache.txt, and also available from http://www.apache.org/licenses/.

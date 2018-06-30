@@ -1,0 +1,32 @@
+---
+- matpower:
+    input_file: data/nesta_mod/nesta_case14_ieee.m
+    default_kV_base: 11
+- psr:
+    use_socp: true
+    bus_faults:
+      - id: bus_13
+    bus_optional_final_fed:
+      - id: bus_13
+    branch_breakers:
+      - {id: branch_00_bus_01_bus_02, init_closed: true}
+      - {id: branch_01_bus_01_bus_05, init_closed: false}
+      - {id: branch_02_bus_02_bus_03, init_closed: true}
+      - {id: branch_03_bus_02_bus_04, init_closed: false}
+      - {id: branch_04_bus_02_bus_05, init_closed: false}
+      - {id: branch_05_bus_03_bus_04, init_closed: false}
+      - {id: branch_06_bus_04_bus_05, init_closed: true}
+      - {id: branch_07_bus_04_bus_07, init_closed: true}
+      - {id: branch_08_bus_04_bus_09, init_closed: true}
+      - {id: branch_09_bus_05_bus_06, init_closed: false}
+      - {id: branch_10_bus_06_bus_11, init_closed: false}
+      - {id: branch_11_bus_06_bus_12, init_closed: false}
+      - {id: branch_12_bus_06_bus_13, init_closed: false}
+      - {id: branch_13_bus_07_bus_08, init_closed: false}
+      - {id: branch_14_bus_07_bus_09, init_closed: true}
+      - {id: branch_15_bus_09_bus_10, init_closed: true}
+      - {id: branch_16_bus_09_bus_14, init_closed: true}
+      - {id: branch_17_bus_10_bus_11, init_closed: true}
+      - {id: branch_18_bus_12_bus_13, init_closed: true}
+      - {id: branch_19_bus_13_bus_14, init_closed: true}
+...

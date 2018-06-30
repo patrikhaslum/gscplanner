@@ -1,0 +1,97 @@
+bus l1 false 80.0 600.0 feed
+bus l2 false 48.0 feed
+bus l3 false 32.0 feed
+bus l4 false 32.0 feed
+bus l5 false 16.0 feed
+bus l6 false 16.0 feed
+bus l7 false 16.0 feed
+bus l8 false 16.0 feed
+bus l9 false 16.0 feed
+bus l10 true 16.0 
+bus l11 false 16.0 
+bus l12 false 32.0 
+bus l13 false 80.0 400.0 feed
+bus l14 false 16.0 feed
+bus l15 false 16.0 feed
+bus l16 false 16.0 feed
+bus l17 false 32.0 feed
+bus l18 false 64.0 400.0 feed
+bus l19 false 16.0 feed
+bus l20 true 16.0 
+bus l21 false 16.0 feed
+bus l22 false 32.0 feed
+bus l23 false 48.0 feed
+bus l24 false 96.0 240.0 feed
+bus l25 false 16.0 feed
+bus l26 false 16.0 feed
+bus l27 false 1.0 feed
+bus l28 false 1.0 feed
+bus l29 false 16.0 feed
+bus l30 false 16.0 feed
+bus l31 false 128.0 360.0 feed
+bus l32 false 1.0 feed
+bus l33 false 16.0 feed
+bus l34 false 106.0 feed
+bus l35 false 32.0 feed
+bus l36 false 64.0 feed
+bus l37 false 96.0 440.0 feed
+bus l38 false 48.0 feed
+bus l39 false 16.0 feed
+bus l40 false 80.0 feed
+bus l41 false 16.0 
+bus l42 false 16.0 feed
+bus l43 false 32.0 feed
+bus l44 false 32.0 feed
+bus l45 false 80.0 600.0 feed
+line b1 l1 600.0 circuit_breaker closed 
+line b2 l24 240.0 circuit_breaker closed 
+line b3 l45 600.0 circuit_breaker open to-close 
+line b4 l37 440.0 circuit_breaker closed 
+line b5 l13 400.0 circuit_breaker open to-close 
+line b6 l18 400.0 circuit_breaker closed 
+line b7 l31 360.0 circuit_breaker closed 
+line d1 l1 l2 600.0 mdevice closed 
+line d2 l2 l3 600.0 rdevice closed 
+line d3 l3 l4 600.0 mdevice closed 
+line d4 l4 l5 600.0 mdevice closed 
+line d5 l5 l6 600.0 rdevice closed 
+line d6 l6 l7 600.0 mdevice closed 
+line d7 l7 l8 600.0 rdevice closed 
+line d8 l8 l9 600.0 mdevice closed 
+line d9 l9 l10 600.0 rdevice open 
+line d10 l10 l11 600.0 mdevice closed 
+line d11 l11 l12 600.0 mdevice closed 
+line d12 l12 l13 600.0 rdevice closed to-open 
+line d13 l4 l14 600.0 mdevice closed 
+line d14 l14 l15 600.0 rdevice open 
+line d15 l15 l16 600.0 mdevice closed 
+line d16 l16 l17 600.0 mdevice closed 
+line d17 l17 l18 600.0 rdevice closed 
+line d18 l16 l19 75.0 mdevice closed 
+line d19 l19 l20 75.0 rdevice open 
+line d20 l20 l21 600.0 rdevice closed to-open 
+line d21 l21 l22 600.0 mdevice closed 
+line d22 l22 l23 600.0 rdevice open 
+line d23 l23 l24 600.0 rdevice closed 
+line d24 l22 l25 600.0 rdevice closed 
+line d25 l25 l26 600.0 mdevice closed 
+line d26 l26 l29 600.0 rdevice open 
+line d27 l29 l30 600.0 mdevice closed 
+line d28 l30 l31 600.0 rdevice closed 
+line d29 l30 l33 600.0 mdevice closed 
+line d30 l33 l34 600.0 rdevice open to-close 
+line d31 l34 l35 600.0 rdevice closed to-open 
+line d32 l35 l36 600.0 rdevice closed 
+line d33 l36 l37 600.0 rdevice closed 
+line d34 l36 l38 600.0 mdevice closed 
+line d35 l38 l39 600.0 rdevice open to-close 
+line d36 l39 l40 600.0 rdevice closed 
+line d37 l40 l41 600.0 rdevice closed to-open 
+line d38 l11 l41 600.0 mdevice closed 
+line d39 l26 l27 600.0 rdevice closed 
+line d40 l25 l42 600.0 mdevice closed 
+line d41 l42 l43 600.0 rdevice closed 
+line d42 l43 l44 600.0 mdevice closed 
+line d43 l44 l45 600.0 rdevice closed 
+line d44 l31 l32 600.0 rdevice closed 
+line d45 l2 l28 600.0 rdevice closed 

@@ -1,0 +1,3 @@
+print_level 1
+tol 1e-8
+fixed_variable_treatment make_parameter 

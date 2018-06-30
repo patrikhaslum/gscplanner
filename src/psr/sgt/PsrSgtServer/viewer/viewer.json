@@ -1,0 +1,258 @@
+{
+    "links": [
+        {
+            "closedStateConstr": [
+                0,
+                0,
+                0
+            ],
+            "hasBreaker": true,
+            "id": "branch_0_bus_1_bus_4",
+            "source": "bus_1",
+            "target": "bus_4"
+        },
+        {
+            "closedStateConstr": [
+                1,
+                0,
+                0
+            ],
+            "hasBreaker": true,
+            "id": "branch_1_bus_4_bus_5",
+            "source": "bus_4",
+            "target": "bus_5"
+        },
+        {
+            "closedStateConstr": [
+                1,
+                1,
+                0
+            ],
+            "hasBreaker": true,
+            "id": "branch_2_bus_5_bus_6",
+            "source": "bus_5",
+            "target": "bus_6"
+        },
+        {
+            "closedStateConstr": [
+                0,
+                0,
+                0
+            ],
+            "hasBreaker": true,
+            "id": "branch_3_bus_3_bus_6",
+            "source": "bus_3",
+            "target": "bus_6"
+        },
+        {
+            "closedStateConstr": [
+                1,
+                1,
+                1
+            ],
+            "hasBreaker": true,
+            "id": "branch_4_bus_6_bus_7",
+            "source": "bus_6",
+            "target": "bus_7"
+        },
+        {
+            "closedStateConstr": [
+                1,
+                1,
+                1
+            ],
+            "hasBreaker": true,
+            "id": "branch_5_bus_7_bus_8",
+            "source": "bus_7",
+            "target": "bus_8"
+        },
+        {
+            "closedStateConstr": [
+                0,
+                0,
+                0
+            ],
+            "hasBreaker": true,
+            "id": "branch_6_bus_8_bus_2",
+            "source": "bus_8",
+            "target": "bus_2"
+        },
+        {
+            "closedStateConstr": [
+                1,
+                1,
+                1
+            ],
+            "hasBreaker": true,
+            "id": "branch_7_bus_8_bus_9",
+            "source": "bus_8",
+            "target": "bus_9"
+        },
+        {
+            "closedStateConstr": [
+                1,
+                1,
+                1
+            ],
+            "hasBreaker": true,
+            "id": "branch_8_bus_9_bus_4",
+            "source": "bus_9",
+            "target": "bus_4"
+        }
+    ],
+    "nodes": [
+        {
+            "fedStateConstr": [
+                1,
+                1,
+                1
+            ],
+            "finalRequireFed": true,
+            "hasFault": false,
+            "hasGen": true,
+            "hasLoad": false,
+            "id": "bus_1",
+            "isFed": [
+                1,
+                1,
+                1
+            ]
+        },
+        {
+            "fedStateConstr": [
+                1,
+                1,
+                1
+            ],
+            "finalRequireFed": true,
+            "hasFault": false,
+            "hasGen": true,
+            "hasLoad": false,
+            "id": "bus_2",
+            "isFed": [
+                1,
+                1,
+                1
+            ]
+        },
+        {
+            "fedStateConstr": [
+                1,
+                1,
+                1
+            ],
+            "finalRequireFed": true,
+            "hasFault": false,
+            "hasGen": true,
+            "hasLoad": false,
+            "id": "bus_3",
+            "isFed": [
+                1,
+                1,
+                1
+            ]
+        },
+        {
+            "fedStateConstr": [
+                2,
+                2,
+                2
+            ],
+            "finalRequireFed": true,
+            "hasFault": false,
+            "hasGen": false,
+            "hasLoad": false,
+            "id": "bus_4",
+            "isFed": [
+                0,
+                0,
+                0
+            ]
+        },
+        {
+            "fedStateConstr": [
+                0,
+                0,
+                0
+            ],
+            "finalRequireFed": false,
+            "hasFault": true,
+            "hasGen": false,
+            "hasLoad": true,
+            "id": "bus_5",
+            "isFed": [
+                0,
+                0,
+                0
+            ]
+        },
+        {
+            "fedStateConstr": [
+                2,
+                2,
+                2
+            ],
+            "finalRequireFed": true,
+            "hasFault": false,
+            "hasGen": false,
+            "hasLoad": false,
+            "id": "bus_6",
+            "isFed": [
+                0,
+                0,
+                0
+            ]
+        },
+        {
+            "fedStateConstr": [
+                2,
+                2,
+                2
+            ],
+            "finalRequireFed": true,
+            "hasFault": false,
+            "hasGen": false,
+            "hasLoad": true,
+            "id": "bus_7",
+            "isFed": [
+                0,
+                0,
+                0
+            ]
+        },
+        {
+            "fedStateConstr": [
+                2,
+                2,
+                2
+            ],
+            "finalRequireFed": true,
+            "hasFault": false,
+            "hasGen": false,
+            "hasLoad": false,
+            "id": "bus_8",
+            "isFed": [
+                0,
+                0,
+                0
+            ]
+        },
+        {
+            "fedStateConstr": [
+                2,
+                2,
+                2
+            ],
+            "finalRequireFed": true,
+            "hasFault": false,
+            "hasGen": false,
+            "hasLoad": true,
+            "id": "bus_9",
+            "isFed": [
+                0,
+                0,
+                0
+            ]
+        }
+    ]
+}

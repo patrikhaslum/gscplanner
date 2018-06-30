@@ -1,0 +1,53 @@
+---
+- matpower:
+    input_file: data/nesta_mod/nesta_case30_fsr.m
+    default_kV_base: 11
+- psr:
+    use_socp: true
+    bus_faults:
+      - id: bus_29
+    bus_optional_final_fed:
+      - id: bus_29
+    branch_breakers:
+      - {id: branch_00_bus_01_bus_02, init_closed: true}
+      - {id: branch_01_bus_01_bus_03, init_closed: true}
+      - {id: branch_02_bus_02_bus_04, init_closed: true}
+      - {id: branch_03_bus_03_bus_04, init_closed: true}
+      - {id: branch_04_bus_02_bus_05, init_closed: true}
+      - {id: branch_05_bus_02_bus_06, init_closed: true}
+      - {id: branch_06_bus_04_bus_06, init_closed: true}
+      - {id: branch_07_bus_05_bus_07, init_closed: true}
+      - {id: branch_08_bus_06_bus_07, init_closed: true}
+      - {id: branch_09_bus_06_bus_08, init_closed: true}
+      - {id: branch_10_bus_06_bus_09, init_closed: true}
+      - {id: branch_11_bus_06_bus_10, init_closed: true}
+      - {id: branch_12_bus_09_bus_11, init_closed: true}
+      - {id: branch_13_bus_09_bus_10, init_closed: true}
+      - {id: branch_14_bus_04_bus_12, init_closed: true}
+      - {id: branch_15_bus_12_bus_13, init_closed: true}
+      - {id: branch_16_bus_12_bus_14, init_closed: true}
+      - {id: branch_17_bus_12_bus_15, init_closed: true}
+      - {id: branch_18_bus_12_bus_16, init_closed: true}
+      - {id: branch_19_bus_14_bus_15, init_closed: true}
+      - {id: branch_20_bus_16_bus_17, init_closed: true}
+      - {id: branch_21_bus_15_bus_18, init_closed: true}
+      - {id: branch_22_bus_18_bus_19, init_closed: true}
+      - {id: branch_23_bus_19_bus_20, init_closed: true}
+      - {id: branch_24_bus_10_bus_20, init_closed: true}
+      - {id: branch_25_bus_10_bus_17, init_closed: true}
+      - {id: branch_26_bus_10_bus_21, init_closed: true}
+      - {id: branch_27_bus_10_bus_22, init_closed: true}
+      - {id: branch_28_bus_21_bus_22, init_closed: true}
+      - {id: branch_29_bus_15_bus_23, init_closed: true}
+      - {id: branch_30_bus_22_bus_24, init_closed: true}
+      - {id: branch_31_bus_23_bus_24, init_closed: true}
+      - {id: branch_32_bus_24_bus_25, init_closed: true}
+      - {id: branch_33_bus_25_bus_26, init_closed: true}
+      - {id: branch_34_bus_25_bus_27, init_closed: true}
+      - {id: branch_35_bus_28_bus_27, init_closed: true}
+      - {id: branch_36_bus_27_bus_29, init_closed: false}
+      - {id: branch_37_bus_27_bus_30, init_closed: false}
+      - {id: branch_38_bus_29_bus_30, init_closed: true}
+      - {id: branch_39_bus_08_bus_28, init_closed: true}
+      - {id: branch_40_bus_06_bus_28, init_closed: true}
+...

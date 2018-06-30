@@ -1,0 +1,23 @@
+---
+- matpower:
+    input_file: data/nesta_mod/nesta_case6_ww.m
+    default_kV_base: 11
+- psr:
+    use_socp: true
+    bus_faults:
+      - id: bus_6
+    bus_optional_final_fed:
+      - id: bus_6
+    branch_breakers:
+      - {id: branch_00_bus_1_bus_2, init_closed: true}
+      - {id: branch_01_bus_1_bus_4, init_closed: false}
+      - {id: branch_02_bus_1_bus_5, init_closed: false}
+      - {id: branch_03_bus_2_bus_3, init_closed: true}
+      - {id: branch_04_bus_2_bus_4, init_closed: false}
+      - {id: branch_05_bus_2_bus_5, init_closed: false}
+      - {id: branch_06_bus_2_bus_6, init_closed: false}
+      - {id: branch_07_bus_3_bus_5, init_closed: false}
+      - {id: branch_08_bus_3_bus_6, init_closed: false}
+      - {id: branch_09_bus_4_bus_5, init_closed: true}
+      - {id: branch_10_bus_5_bus_6, init_closed: true}
+...
