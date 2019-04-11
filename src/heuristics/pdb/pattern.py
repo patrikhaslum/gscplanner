@@ -24,7 +24,8 @@ class Table :
 				if x in self.signature : 
 					self.relevant_actions.add( action.index )
 					self.relevant_vars |= set( [ x for x, _ in action.prim_precs ])
-					self.relevant_vars |= set( [ x for x, _ in action.effect ] )					
+					self.relevant_vars |= set( [ x for x, _ in action.effect ] )
+
 
 	def populate_informed( self, projected_task, vars_maps, actions_maps, h ) :
 		from itertools				import product
@@ -73,53 +74,16 @@ class Table :
 			first_action_in_plan = None
 			if len(plan) > 0 :
 				self.num_non_zero_entries += 1
-				first_action_in_plan =  inv_action_map[plan[0].index] 
-			self.table[ entry_index ] = Entry( len(plan), first_action_in_plan )	
-			self.max_value = max( self.max_value, len(plan) )
-
+				first_action_in_plan =  inv_action_map[plan[0].index]
+                        plan_cost = sum([ action.cost for action in plan ])
+			self.table[ entry_index ] = Entry( plan_cost, first_action_in_plan )	
+			self.max_value = max( self.max_value, plan_cost )
 
 
 	def populate( self, projected_task, vars_maps, actions_maps ) :
-		from itertools				import product
-		from search				import breadth_first_search
-		from model.generic.planning.task 	import State
+                from heuristics.h_zero import H_Zero
+                self.populate_informed(projected_task, vars_maps, actions_maps, H_Zero(projected_task))
 
-		var_map, inv_var_map = vars_maps
-		action_map, inv_action_map =  actions_maps
-
-		domains = [ x.domain for x in projected_task.task.state_vars ]
-	
-		value_index = 0
-
-		self.unsolvable_count = 0
-		self.num_non_zero_entries = 0
-		self.max_value = 0
-		for valuation in apply(product, map(tuple,domains) ) :
-			value_index += 1
-			# indexed with the original vars
-			entry_index = tuple([ ( inv_var_map[x], v) for x, v in enumerate(valuation) ])
-			s0 = State( projected_task.task, [ (x,v) for x,v in enumerate(valuation) ] )
-			projected_task.set_initial_state( s0 )
-			projected_task.initial_state.check_valid()
-			if not projected_task.initial_state.valid :
-				self.table[ entry_index ] = Entry( float('inf'), None )
-				self.unsolvable_count += 1
-				continue				
-			plan = breadth_first_search( projected_task, True )
-			if plan is None :
-				self.table[ entry_index ] = Entry( float('inf'), None )
-				self.unsolvable_count += 1
-				continue
-			first_action_in_plan = None
-			if len(plan) > 0 :
-				self.num_non_zero_entries += 1
-				first_action_in_plan =  inv_action_map[plan[0].index] 
-			self.table[ entry_index ] = Entry( len(plan), first_action_in_plan )	
-			self.max_value = max( self.max_value, len(plan) )
-
-		logging.info( '# of infinite entries in pattern: {0}'.format( self.unsolvable_count ) )
-		logging.info( '# of entries with a value greater than 0: {0}'.format(self.num_non_zero_entries) )
-		logging.info( 'Maximum value in pattern: {0}'.format( self.max_value ) )
 
 	def evaluate( self, state ) :
 		try :

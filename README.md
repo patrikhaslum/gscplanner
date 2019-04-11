@@ -188,8 +188,59 @@ of some of the domains, suitable for use with other planners.
     will generate PDDL problem files from the instance files in the
     `hydraulic-blocks-world` directory. Note that there is a separate
     domain file for each number of cylinders in the problem (3, 4 or
-    5).  This is necessary since the numeric subset of PDDL does not
-    have a "sum" operator.
+    5). This is necessary since the numeric subset of PDDL does not
+    have a "sum" operator. The domain files use a `:constraint`
+    clause, which is an extension implemented by the ENHSP planner.
+    To make an equivalent pure PDDL formulation, these constraints
+    should be added to the precondition of every action and to the
+    goal (as outlined in Section 4 of the paper).
 
 *   `benchmarks/psr/for-popf` contains the domain and problem files for
     use with the POPF-TIF planner and plugin for the AC-PSR domain.
+
+
+## Revisions
+
+### Corrected PDB Implementation
+
+There was an error in the initial implementation of the PDB heuristic.
+It only affects domains with non-unit action costs, which among those
+above is only the Linehaul domain. The corrected implementation works
+a bit better for the Linehaul domain. As a result, the relevant lines
+in Table 1 and Table 3 (Section 7 in the paper) change as follows:
+
+<table border="1">
+<tr>
+<td>Problems</td>
+<td>#</td>
+<td>A*/blind</td>
+<td>A*/h<sup>max</sup></td>
+<td>A*/h<sup>+</sup></td>
+<td>A*/PDB</td>
+<td>PrefPEA*/h<sup>+</sup></td>
+<td>PrefPEA*/PDB</td>
+</tr>
+<tr>
+<td>2R/2A trucks</td><td>  6</td>
+<td> 6</td><td> 6</td><td> 6</td><td> 6</td><td> 6</td><td> 6</td>
+</tr>
+<tr>
+<td>3R/2A trucks</td><td> 19</td>
+<td> 9</td><td>19</td><td> 7</td><td> <strike>9</strike> 15</td><td> 7</td><td> <strike>12</strike> 15</td>
+</tr>
+<tr>
+<td>3R/3A trucks</td><td> 87</td>
+<td> 7</td><td>68</td><td> 6</td><td> <strike>7</strike> 15</td><td> 6</td><td> <strike>7</strike> 15</td>
+</tr>
+<tr>
+<td>4R/3A trucks</td><td>258</td>
+<td> 7</td><td>63</td><td> 4</td><td> <strike>7</strike> 14</td><td> 6</td><td> <strike>7</strike> 14</td>
+</tr>
+<tr>
+<td>4R/4A trucks</td><td>303</td>
+<td> 7</td><td>62</td><td> 4</td><td> 7</td><td> 4</td><td> 7</td>
+</tr>
+</table>
+
+This does not substantially change the picture of the relative performance
+of the different heuristics, or any of the conclusions of the experiments.
