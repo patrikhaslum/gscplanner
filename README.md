@@ -221,24 +221,24 @@ in Table 1 and Table 3 (Section 7 in the paper) change as follows:
 <td>PrefPEA*/PDB</td>
 </tr>
 <tr>
-<td>2R/2A trucks</td><td>  6</td>
-<td> 6</td><td> 6</td><td> 6</td><td> 6</td><td> 6</td><td> 6</td>
+<td>2R/2A trucks</td><td align="right">6</td>
+<td align="right">6</td><td align="right">6</td><td align="right">6</td><td align="right">6</td><td align="right">6</td><td align="right">6</td>
 </tr>
 <tr>
-<td>3R/2A trucks</td><td> 19</td>
-<td> 9</td><td>19</td><td> 7</td><td> <strike>9</strike> 15</td><td> 7</td><td> <strike>12</strike> 15</td>
+<td>3R/2A trucks</td><td align="right">19</td>
+<td align="right">9</td><td align="right">19</td><td align="right">7</td><td align="right"><strike>9</strike> <b>15</b></td><td align="right">7</td><td align="right"> <strike>12</strike> <b>15</b></td>
 </tr>
 <tr>
-<td>3R/3A trucks</td><td> 87</td>
-<td> 7</td><td>68</td><td> 6</td><td> <strike>7</strike> 15</td><td> 6</td><td> <strike>7</strike> 15</td>
+<td>3R/3A trucks</td><td align="right">87</td>
+<td align="right">7</td><td align="right">68</td><td align="right">6</td><td align="right"> <strike>7</strike> <b>15</b></td><td align="right">6</td><td align="right"> <strike>7</strike> <b>15</b></td>
 </tr>
 <tr>
-<td>4R/3A trucks</td><td>258</td>
-<td> 7</td><td>63</td><td> 4</td><td> <strike>7</strike> 14</td><td> 6</td><td> <strike>7</strike> 14</td>
+<td>4R/3A trucks</td><td align="right">258</td>
+<td align="right">7</td><td align="right">63</td><td align="right">4</td><td align="right"> <strike>7</strike> <b>14</b></td><td align="right">6</td><td align="right"> <strike>7</strike> <b>14</b></td>
 </tr>
 <tr>
-<td>4R/4A trucks</td><td>303</td>
-<td> 7</td><td>62</td><td> 4</td><td> 7</td><td> 4</td><td> 7</td>
+<td>4R/4A trucks</td><td align="right">303</td>
+<td align="right">7</td><td align="right">62</td><td align="right">4</td><td align="right">7</td><td align="right">4</td><td align="right">7</td>
 </tr>
 </table>
 
