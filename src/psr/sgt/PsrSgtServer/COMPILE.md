@@ -16,13 +16,19 @@
     PSR-server. A source distribution of PowerTools is provided
     together with SGT, so it's not necessary to download separately.
 
-*   [Ipopt](https://projects.coin-or.org/Ipopt).
+*   [Ipopt](https://projects.coin-or.org/Ipopt) or
+    [Bonmin](https://www.coin-or.org/download/source/Bonmin/)
 
     PowerTools depends on Ipopt. Ipopt in turn depends on a number
-    of other packages. Some of these are provided (as source) with
-    the Ipopt source distribution; they can also be installed
-    separately (e.g., via package manager), but the library names
-    are different from what Ipopt (and PowerTools) expect.
+    of other packages, some of which are alternatives/optional.
+    (A minimal set appears to be `HSL` and `metis`.) These can be
+    compiled from source, or in some cases installed via a package
+    manager.
+
+    Bonmin is a superset of Ipopt (supporting also mixed-integer
+    non-linear programming). The MINLP-based AC-PSR solver
+    (`minlp_planning`) requires PowerTools to be built with Bonmin
+    in order to run.
 
 *   [Gurobi](http://gurobi.com/).
 
@@ -35,8 +41,8 @@
 
 ## Compiling
 
-Install Gurobi and Ipopt first. Then clone SGT, build and install the
-third_party libraries (PowerTools and yaml-cpp) that come with it,
+Install Gurobi and Ipopt/Bonmin first. Then clone SGT, build and install
+the third_party libraries (PowerTools and yaml-cpp) that come with it,
 then build and install SGT. Finally, build and install cpprest.
 
 After this is done, the usual
@@ -44,8 +50,9 @@ After this is done, the usual
 	./configure
 	make psr_server
 
-should suffice to build the server. The config/automake scripts may
-require `libtool`.
+should suffice to build the server. The configure script has options
+for customising the Gurobi install location. The config/automake
+scripts may require `libtool`.
 
 Other tools provided are:
 

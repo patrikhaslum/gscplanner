@@ -34,6 +34,8 @@ planner connects to via HTTP. The server code is in subdirectory
 `psr/sgt/PsrSgtServer/`. It also includes the plugin module for
 the POPF-TIF planner.
 Please read the [notes on compiling the PSR server](src/psr/sgt/PsrSgtServer/COMPILE.md). It's complicated.
+The `psr_sgt_solver` also requires the [requests](https://pypi.org/project/requests/)
+module.
 
 ## Usage
 
