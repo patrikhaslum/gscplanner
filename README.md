@@ -252,7 +252,7 @@ in Table 1 and Table 3 (Section 7 in the paper) change as follows:
 This does not substantially change the picture of the relative performance
 of the different heuristics, or any of the conclusions of the experiments.
 
-## State-Dependent Action Costs (SDAC) version
+### State-Dependent Action Costs (SDAC) version
 
 The `sdac` subdirectory contains a separate copy of the planner and PSR
 server with support for state-dependent action costs. The copy only
