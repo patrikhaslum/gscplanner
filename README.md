@@ -7,6 +7,11 @@ Planning" (Patrik Haslum, Franc Ivankovic, Miquel Ramirez, Dan Gordon,
 Sylvie Thiebaux, Vikas Shivashankar and Dana S. Nau, Journal of AI
 Research, vol. 62, pages 373-431, 2018).
 
+The adaptation of the planner to state-dependent action costs (`sdac`)
+is described in "Planning with Global State Constraints and
+State-Dependent Action Costs" (Franc Ivankovic, Dan Gordon and
+Patrik Haslum, ICAPS 2019).
+
 ## Setup
 
 The planner requries python 2 (probably version 2.7 or later).
@@ -246,3 +251,10 @@ in Table 1 and Table 3 (Section 7 in the paper) change as follows:
 
 This does not substantially change the picture of the relative performance
 of the different heuristics, or any of the conclusions of the experiments.
+
+## State-Dependent Action Costs (SDAC) version
+
+The `sdac` subdirectory contains a separate copy of the planner and PSR
+server with support for state-dependent action costs. The copy only
+includes the domains (hbw3 and psr/sgt), algorithms (A*) and heuristics
+(PDB variants) that have been adapted to support SDACs.
