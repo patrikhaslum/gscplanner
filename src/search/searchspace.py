@@ -61,13 +61,16 @@ class SearchNode:
         if VERBOSE:
             stateseq.reverse()
             for i, s in enumerate(stateseq):
-                print "==== STATE ", i, " ===="
+                print( "==== STATE ", i, " ====" )
                 s.write(sys.stdout)
                 if i < len(solution):
-                    print "next action ", solution[i].name
-                    print
+                    print( "next action ", solution[i].name )
+                    print()
         return solution
 
+    def __lt__(self, other_node):
+        assert isinstance(other_node, SearchNode)
+        return False
 
 def make_root_node(initial_state):
     """

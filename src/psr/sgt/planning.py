@@ -44,4 +44,4 @@ def make_initial_state(task):
     for branch in task.network.branches:
         valuation[branch.closed.index] = branch.init_closed
 
-    return State(task, [(x,v) for x,v in valuation.iteritems()])
+    return State(task, [(x,v) for x,v in valuation.items()])

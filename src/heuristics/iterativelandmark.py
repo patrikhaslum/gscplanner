@@ -11,173 +11,173 @@ from model.planning import *
 #layer consists of a ustate and a list of actions that could be applied
 class R_p_layer:
     def __init__(self,ustate,applied_actions,available_actions):
-	self.ustate=ustate  		#assignments for the primary variables
-	self.available_actions=available_actions   #unapplied actions
-	self.applied_actions=applied_actions #actions applied in the previous state to reach this state
+        self.ustate=ustate                  #assignments for the primary variables
+        self.available_actions=available_actions   #unapplied actions
+        self.applied_actions=applied_actions #actions applied in the previous state to reach this state
     def pstring(self):
-	s="\nActions applied to reach the state:\n"
-	s=s+pstring_actions(self.applied_actions)
-	s=s+"\nValues over the variables:\n"
-	s=s+self.ustate.pstring()
-	s=s+"\nRemaining actions:\n"
-	s=s+pstring_actions(self.available_actions)
-	return s
+        s="\nActions applied to reach the state:\n"
+        s=s+pstring_actions(self.applied_actions)
+        s=s+"\nValues over the variables:\n"
+        s=s+self.ustate.pstring()
+        s=s+"\nRemaining actions:\n"
+        s=s+pstring_actions(self.available_actions)
+        return s
 
 class R_p_graph:
     def __init__(self,problem):
-	self.problem=problem  		#assignments for the primary variables
-#	self.all_actions=problem.p_action #NOTE: Used by add action... unsure whether needed? 
-	self.actions=problem.p_action   #unapplied actions
-	self.layers=[] #a list of states, initally empty
+        self.problem=problem                  #assignments for the primary variables
+#        self.all_actions=problem.p_action #NOTE: Used by add action... unsure whether needed? 
+        self.actions=problem.p_action   #unapplied actions
+        self.layers=[] #a list of states, initally empty
     def astart(self):
-	return (self.problem).p_start
+        return (self.problem).p_start
     def constraints(self):
-	return (self.problem).p_invar
+        return (self.problem).p_invar
     def goal(self):
-	return (self.problem).p_goal
+        return (self.problem).p_goal
     def pvars(self):
-	return (self.problem).p_vars_p
+        return (self.problem).p_vars_p
     def tmodel(self):
-	return (self.problem).transition_model
+        return (self.problem).transition_model
     def gmodel(self):
-	return (self.problem).goal_model
+        return (self.problem).goal_model
     def svars(self):
-	return (self.problem).p_vars_s
+        return (self.problem).p_vars_s
     def constraints_to_check(self):
-	return (self.problem).constraints_to_check
+        return (self.problem).constraints_to_check
     def goal_reached(self):
-#	print "Calling goal reached..."
-	g=self.goal()
-	if len(self.layers)<1:
-	  return False
-	last_layer=self.layers[-1]
-	last_ustate=last_layer.ustate
-	return g.u_reached(last_ustate,self.gmodel(),constraints=self.constraints_to_check())
+#        print "Calling goal reached..."
+        g=self.goal()
+        if len(self.layers)<1:
+          return False
+        last_layer=self.layers[-1]
+        last_ustate=last_layer.ustate
+        return g.u_reached(last_ustate,self.gmodel(),constraints=self.constraints_to_check())
     def add_action_to_end_layer(self,action):
-	final_layer=self.layers[-1]
-	final_layer.available_actions.append(action)
+        final_layer=self.layers[-1]
+        final_layer.available_actions.append(action)
     def add_start_layer(self):
-	start_ustate=(self.astart()).make_pustate()
-	start_actions=self.actions
-	(self.layers).append(R_p_layer(start_ustate,[],start_actions))
+        start_ustate=(self.astart()).make_pustate()
+        start_actions=self.actions
+        (self.layers).append(R_p_layer(start_ustate,[],start_actions))
     def add_next_layer(self): #returns True if the new layer is different from the old one (at least one action was applied)
-	if(len(self.layers)<1):
-	  number_of_actions=self.add_start_layer()
-	  return True
-	else:
-	  from_layer=self.layers[-1]
-	  available_actions=from_layer.available_actions
-	  current_ustate=from_layer.ustate
-	  
-	  #This line is used forn non-relaxed version. It checks whether the resulting ustate is allowed 
-	  #NOTE Uncomment out to return to the tighter relaxation.
-	  #[new_state,unapplied_a,applied_a]=u_apply_return_unapplied_actions(available_actions,current_ustate,self.tmodel(),self.constraints_to_check())
+        if(len(self.layers)<1):
+          number_of_actions=self.add_start_layer()
+          return True
+        else:
+          from_layer=self.layers[-1]
+          available_actions=from_layer.available_actions
+          current_ustate=from_layer.ustate
+          
+          #This line is used forn non-relaxed version. It checks whether the resulting ustate is allowed 
+          #NOTE Uncomment out to return to the tighter relaxation.
+          #[new_state,unapplied_a,applied_a]=u_apply_return_unapplied_actions(available_actions,current_ustate,self.tmodel(),self.constraints_to_check())
 
-	  #This function assumes that the resulting ustate is allowed 
-	  #NOTE Comment out to return to the tighter relaxation.
-	  [new_state,unapplied_a,applied_a]=u_apply_return_unapplied_actions_relaxed(available_actions,current_ustate,self.tmodel(), self.constraints_to_check())
-	  
-	  if len(applied_a)>0:
-	    new_layer=R_p_layer(new_state,applied_a,unapplied_a)
-	    self.layers.append(new_layer)
-	    return True #if actions were applied in making the layer returns True
-	return False #
+          #This function assumes that the resulting ustate is allowed 
+          #NOTE Comment out to return to the tighter relaxation.
+          [new_state,unapplied_a,applied_a]=u_apply_return_unapplied_actions_relaxed(available_actions,current_ustate,self.tmodel(), self.constraints_to_check())
+          
+          if len(applied_a)>0:
+            new_layer=R_p_layer(new_state,applied_a,unapplied_a)
+            self.layers.append(new_layer)
+            return True #if actions were applied in making the layer returns True
+        return False #
     def no_actions_applicable(self):
-	if len(self.layers)<2:
-	  return False
-	current_state=self.layers[-1]
-	if len(current_state.applied_actions)<1:
-	  return True
-	return False
+        if len(self.layers)<2:
+          return False
+        current_state=self.layers[-1]
+        if len(current_state.applied_actions)<1:
+          return True
+        return False
     def build_graph(self): #given a problem, builds a graph until the goal is reached
-	g=self.goal_reached()
-	new_layer_added=True
-	i=0
-	while(not(g) and new_layer_added):
-	  new_layer_added=self.add_next_layer()
-	  g=self.goal_reached()	
-	return g
+        g=self.goal_reached()
+        new_layer_added=True
+        i=0
+        while(not(g) and new_layer_added):
+          new_layer_added=self.add_next_layer()
+          g=self.goal_reached()        
+        return g
     def pstring(self): #prints out the graph
-	s=""
-	i=0
-	for l in self.layers:
-	  s=s+"\n----------------------------State {0}----------------------------\n".format(i)
-	  s=s+l.pstring()	  
-	  i=i+1
-	return s
+        s=""
+        i=0
+        for l in self.layers:
+          s=s+"\n----------------------------State {0}----------------------------\n".format(i)
+          s=s+l.pstring()          
+          i=i+1
+        return s
     def reset_layers(self):
-	self.layers=[]
-	self.actions=(self.problem).p_action
-	
-	#similar to the check_reachability, except doesn't keep the action in the unapplied actions
+        self.layers=[]
+        self.actions=(self.problem).p_action
+        
+        #similar to the check_reachability, except doesn't keep the action in the unapplied actions
     def try_action(self,action):
-	 
-	current_layer=self.layers[-1]
-	[new_state,unapplied_a,applied_a]=u_apply_return_unapplied_actions_relaxed([action],current_layer.ustate,self.tmodel(), self.constraints_to_check())
-	if len(applied_a)>0: #if the action was successfully applied
-	  new_layer=R_p_layer(new_state,applied_a,[]) #create a new layer
-	  self.layers.append(new_layer) #append it to the graph
-	  return True
-	return False
+         
+        current_layer=self.layers[-1]
+        [new_state,unapplied_a,applied_a]=u_apply_return_unapplied_actions_relaxed([action],current_layer.ustate,self.tmodel(), self.constraints_to_check())
+        if len(applied_a)>0: #if the action was successfully applied
+          new_layer=R_p_layer(new_state,applied_a,[]) #create a new layer
+          self.layers.append(new_layer) #append it to the graph
+          return True
+        return False
 
    
     #old functions
     """
     def printstate(self):
-	print('\nPrimary variables:')
-	for i in self.pvars():
-	    i.uprint()
-	g=self.goal()
-	print('\nIs the goal reached? {0}\n'.format(self.goal_reached()))
-	print('Remaining actions:')
-	for i in self.actions:
-	    print(i.name)
-	print("")
+        print('\nPrimary variables:')
+        for i in self.pvars():
+            i.uprint()
+        g=self.goal()
+        print('\nIs the goal reached? {0}\n'.format(self.goal_reached()))
+        print('Remaining actions:')
+        for i in self.actions:
+            print(i.name)
+        print("")
     def apply_actions_print(self): 
-	print("")
-	if(len(self.actions)==0):
-	    print("No actions left")
-	allowed_actions=set()
-	print("Allowed actions:")
-	for a in self.actions:
-	    print("Checking whether {0} allowed".format(a.name))
-	    if(a.u_allowed(self.constraints(),self.svars())):
-		print("Allowed {0}".format(a.name))
-		allowed_actions.add(a)
-	applied_actions=set()
-	for a in allowed_actions:
-	    if(u_apply(a, self.constraints(),self.svars())): 
-		print('Action {0} applied'.format(a.name))
-		applied_actions.add(a)
-	self.actions=(self.actions).difference(applied_actions)
-	print("")
-	return len(allowed_actions)>0
+        print("")
+        if(len(self.actions)==0):
+            print("No actions left")
+        allowed_actions=set()
+        print("Allowed actions:")
+        for a in self.actions:
+            print("Checking whether {0} allowed".format(a.name))
+            if(a.u_allowed(self.constraints(),self.svars())):
+                print("Allowed {0}".format(a.name))
+                allowed_actions.add(a)
+        applied_actions=set()
+        for a in allowed_actions:
+            if(u_apply(a, self.constraints(),self.svars())): 
+                print('Action {0} applied'.format(a.name))
+                applied_actions.add(a)
+        self.actions=(self.actions).difference(applied_actions)
+        print("")
+        return len(allowed_actions)>0
 
     def build_graph_print(self): #builds and prints the whole graph. Returns whether goal reached
-	print("\n---------------Start state-----------------")
-	self.printstate() #print the initial
-	allowed_actions_remaining=len(self.actions)>0
-#	print("{0} {1}".format(not(self.goal_reached()),actions_remaining))
-	i=1
-	while(not(self.goal_reached()) and allowed_actions_remaining):
-	    print("---------------Actions {0}------------------".format(i))
-	    allowed_actions_remaining=self.apply_actions_print()
-	    print("---------------Union state {0}---------------".format(i))
-	    self.printstate()
-#	    actions_remaining=len(self.actions)>0
-	    i=i+1
-	return self.goal_reached()
+        print("\n---------------Start state-----------------")
+        self.printstate() #print the initial
+        allowed_actions_remaining=len(self.actions)>0
+#        print("{0} {1}".format(not(self.goal_reached()),actions_remaining))
+        i=1
+        while(not(self.goal_reached()) and allowed_actions_remaining):
+            print("---------------Actions {0}------------------".format(i))
+            allowed_actions_remaining=self.apply_actions_print()
+            print("---------------Union state {0}---------------".format(i))
+            self.printstate()
+#            actions_remaining=len(self.actions)>0
+            i=i+1
+        return self.goal_reached()
     def apply_actions(self):
-	allowed_actions=set()
-	for a in self.actions:
-	    if(a.u_allowed(self.constraints(),self.svars())):
-		allowed_actions.add(a)
-	applied_actions=set()
-	for a in allowed_actions:
-	    if(u_apply(a, self.constraints(),self.svars())): 
-		applied_actions.add(a)
-	self.actions=(self.actions).difference(applied_actions)
-	return len(allowed_actions)>0
+        allowed_actions=set()
+        for a in self.actions:
+            if(a.u_allowed(self.constraints(),self.svars())):
+                allowed_actions.add(a)
+        applied_actions=set()
+        for a in allowed_actions:
+            if(u_apply(a, self.constraints(),self.svars())): 
+                applied_actions.add(a)
+        self.actions=(self.actions).difference(applied_actions)
+        return len(allowed_actions)>0
   """
 
 #cheks whether an action can be applied to the last state. If yes, it also cheks whether any other other unapplied actions are now now applicable.
@@ -229,19 +229,19 @@ def check_reachability_addAction_early(graph,action):
     print("Adding action {0}".format(action.name))
     
     if(action.u_allowed(graph.constraints(),graph.svars())): #if action is allowed
-	u_apply(action, graph.constraints(),graph.svars()) #apply the action
-	allowed_actions=[]
-	for a in graph.actions: #check whether the application of this action makes any actions before applicable
-	    if(a.u_allowed(graph.constraints(),graph.svars())):
-		allowed_actions.append(a)
-	applied_actions=set()
-	for a in allowed_actions: #apply the allowed actions
-	    if(u_apply(a, graph.constraints(),graph.svars())): 
-		applied_actions.add(a)
-	graph.actions=(graph.actions).difference(applied_actions)
-	return graph.goal_reached() #return whether the goal has been reached
+        u_apply(action, graph.constraints(),graph.svars()) #apply the action
+        allowed_actions=[]
+        for a in graph.actions: #check whether the application of this action makes any actions before applicable
+            if(a.u_allowed(graph.constraints(),graph.svars())):
+                allowed_actions.append(a)
+        applied_actions=set()
+        for a in allowed_actions: #apply the allowed actions
+            if(u_apply(a, graph.constraints(),graph.svars())): 
+                applied_actions.add(a)
+        graph.actions=(graph.actions).difference(applied_actions)
+        return graph.goal_reached() #return whether the goal has been reached
     else: #else the action is added to the unapplied actions set
-	graph.actions.add(action)
+        graph.actions.add(action)
     return False
      
 
@@ -267,27 +267,27 @@ def iterative_landmark(problem,collectionL=[]):
     
     for l in collectionL:
       for a in l:
-	if a not in problem.p_action:
-	  print "Action not in problem!!"
-	  raise Error
+        if a not in problem.p_action:
+          print "Action not in problem!!"
+          raise Error
     
     i=0 #counter for debugging   
     while not(goal_reachable):# and i<10): 
-	
-#	print "going into while loop... {0}".format(i)
-	
-	collectionL.append(new_landmark(graph,setA)) #use setA to add a new landmark 
-#	print pstring_action_collection(collectionL)
-	setA=min_cost_hitting_set(collectionL,problem.p_action) 	#create new setA
-	graph.reset_layers() 					#reset the graph
-	goal_reachable=check_reachability_using_set(graph,list(setA)) #check whether the new setA reaches the goal
-	
-#	print "What are the graph.actions?"
-#	print_set_elements(graph.actions)
-#	print "SetA?"
-#	print_set_elements(setA)
-	i=i+1 #counter for debugging
-	
+        
+#        print "going into while loop... {0}".format(i)
+        
+        collectionL.append(new_landmark(graph,setA)) #use setA to add a new landmark 
+#        print pstring_action_collection(collectionL)
+        setA=min_cost_hitting_set(collectionL,problem.p_action)         #create new setA
+        graph.reset_layers()                                         #reset the graph
+        goal_reachable=check_reachability_using_set(graph,list(setA)) #check whether the new setA reaches the goal
+        
+#        print "What are the graph.actions?"
+#        print_set_elements(graph.actions)
+#        print "SetA?"
+#        print_set_elements(setA)
+        i=i+1 #counter for debugging
+        
     graph.reset_layers()
     return [collectionL,setA]
 
@@ -311,13 +311,13 @@ def new_landmark(graph, setA):
     #NOTE: There shouldbe a bunch of stuff here instead of the addAction function
       length_of_the_graph_before=len(graph.layers)
  #     current_pvstate=graph.problem.current_pvstate() #saves a state before applying the action    #NOTE: Not used anymore
-      if not(check_reachability_addAction_end(graph,c_action)): #NOTE: Mistake here, I think	 #Fixed, I think    
-#	  print("Adding {0}".format(c_action.name))
-	  setA.add(c_action)
+      if not(check_reachability_addAction_end(graph,c_action)): #NOTE: Mistake here, I think         #Fixed, I think    
+#          print("Adding {0}".format(c_action.name))
+          setA.add(c_action)
       else:
-#	  current_pvstate.getstate() #NOTE: Not used anymore... instead, it deletes the last layer from the graph.
-	  graph.layers=graph.layers[:length_of_the_graph_before]
-#	  print("Not adding {0}".format(c_action.name))
+#          current_pvstate.getstate() #NOTE: Not used anymore... instead, it deletes the last layer from the graph.
+          graph.layers=graph.layers[:length_of_the_graph_before]
+#          print("Not adding {0}".format(c_action.name))
 
   complement_setA=problem_actions.difference(setA)
   

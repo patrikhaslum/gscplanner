@@ -1,5 +1,7 @@
 from gurobipy import Model, GRB, quicksum
 
+xrange = range
+
 class LinearProgram :
 
         def __init__( self, hbw_task = None ) :
@@ -42,9 +44,9 @@ class LinearProgram :
                 for x in xrange( hbw_task.objects.num_cylinders() ) :
                         varname = 'd_{0}'.format(x)
                         fch_i = self.model.addVar( vtype = GRB.CONTINUOUS,
-						   name = varname,
-						   lb = 0.0,
-						   ub = hbw_task.objects.cylinders[x].height )
+                                                   name = varname,
+                                                   lb = 0.0,
+                                                   ub = hbw_task.objects.cylinders[x].height )
                         self.fluid_column_heights.append( fch_i )
 
                 self.variables += self.fluid_column_heights
@@ -58,9 +60,9 @@ class LinearProgram :
                         for j in xrange( hbw_task.objects.num_cylinders() ) :
                                 varname = 'w_{0},{1}'.format(i,j)
                                 pw_ij = self.model.addVar( vtype = GRB.CONTINUOUS,
-							   name = varname,
-							   lb = 0.0,
-							   ub = hbw_task.objects.blocks[i].weight )
+                                                           name = varname,
+                                                           lb = 0.0,
+                                                           ub = hbw_task.objects.blocks[i].weight )
                                 self.partial_wts[ (i, j ) ] = pw_ij
                                 self.variables.append( pw_ij )
                 # wt of columns (fluid + blocks) in each cylinder
@@ -69,7 +71,7 @@ class LinearProgram :
                 for x in xrange( hbw_task.objects.num_cylinders() ) :
                         varname = 'f_{0}'.format(x)
                         cw_x = self.model.addVar( vtype = GRB.CONTINUOUS,
-						  name = varname )
+                                                  name = varname )
                         self.column_wts.append( cw_x )
                 self.variables += self.column_wts
 
@@ -105,7 +107,7 @@ class LinearProgram :
                         constraint = ( var_valuation, self.model.addConstr( self.partial_wts[(i,cylId)] - hbw_task.objects.blocks[i].weight  == 0 ) )
                         wt_constraints.append( constraint )
 
-                        for name, v in hbw_task.block_container_values.iteritems() :
+                        for name, v in hbw_task.block_container_values.items() :
                                 if name == in_cylinder(cylId) : continue
                                 var_valuation = [ ( var.index, v ) ]
 
@@ -121,9 +123,9 @@ class LinearProgram :
                 cross_section_area_of_cyl = hbw_task.objects.cylinders[cylId].area
 
                 constr = ( [], # unconditional
-			   self.model.addConstr( self.column_wts [cylId]
-						 - density*cross_section_area_of_cyl*self.fluid_column_heights [cylId]
-						 - quicksum( self.partial_wts[(i,cylId)] for i in xrange(hbw_task.objects.num_blocks() )) == 0  ) )
+                           self.model.addConstr( self.column_wts [cylId]
+                                                 - density*cross_section_area_of_cyl*self.fluid_column_heights [cylId]
+                                                 - quicksum( self.partial_wts[(i,cylId)] for i in xrange(hbw_task.objects.num_blocks() )) == 0  ) )
                 return constr
 
         def make_column_wt_constraints (self, hbw_task):
@@ -138,17 +140,17 @@ class LinearProgram :
                         reciprocal_area_2 = 1.0 / hbw_task.objects.cylinders[cylId + 1].area
 
                         lpconstr = ( [], # unconditional
-				     self.model.addConstr( reciprocal_area_1 * self.column_wts[cylId]
-							   - reciprocal_area_2 * self.column_wts[cylId+1] == 0 ) )
+                                     self.model.addConstr( reciprocal_area_1 * self.column_wts[cylId]
+                                                           - reciprocal_area_2 * self.column_wts[cylId+1] == 0 ) )
                         pb_constraints.append( lpconstr )
 
                 return pb_constraints
 
         def make_fluid_balancing_constraint (self, hbw_task):
                 constr = ( [], # unconditional
-			   self.model.addConstr(
-				quicksum( hbw_task.objects.cylinders[cylId].area * self.fluid_column_heights[cylId] for cylId in xrange(hbw_task.objects.num_cylinders()) )
-				== hbw_task.objects.fluid.total_fluid_in_cylinders ) )
+                           self.model.addConstr(
+                                quicksum( hbw_task.objects.cylinders[cylId].area * self.fluid_column_heights[cylId] for cylId in xrange(hbw_task.objects.num_cylinders()) )
+                                == hbw_task.objects.fluid.total_fluid_in_cylinders ) )
                 return [ constr ]
 
         def print_constraints (self):

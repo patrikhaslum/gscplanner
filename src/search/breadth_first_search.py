@@ -26,48 +26,48 @@ from . import searchspace
 
 from heuristics.novelty import Novelty_Table
 def breadth_first_search(planning_task, mute = False):
-	'''
-	Searches for a plan on the given task using breadth first search and
-	duplicate detection.
-	
-	@param planning_task: The planning task to solve.
-	@return: The solution as a list of operators or None if the task is
-	unsolvable.
-	'''
-	# counts the number of loops (only for printing)
-	iteration = 0
-	# fifo-queue storing the nodes which are next to explore
-	queue = deque()
-	queue.append(searchspace.make_root_node(planning_task.initial_state))
-	# set storing the explored nodes, used for duplicate detection
-	closed = {planning_task.initial_state}
-	while queue:
-		iteration += 1
-		if not mute: 
-			logging.debug("breadth_first_search: Iteration %d, #unexplored=%d"
-					% (iteration, len(queue)))
-		# get the next node to explore
-		node = queue.popleft()
-		if not mute :
-			logging.debug("breadth_first_search: f(n) = %f"%node.g )
-		# exploring the node or if it is a goal node extracting the plan
-	
-		if planning_task.goal_reached(node.state):
-			if not mute :
-				logging.info("Goal reached. Start extraction of solution.")
-				logging.info("%d Nodes expanded" % iteration)
-			return node.extract_solution()
-		for operator, successor_state in planning_task.get_successor_states( node.state):
-			# duplicate detection
-			if successor_state not in closed:
-				queue.append(searchspace.make_child_node(node, operator,
-										successor_state))
-				# remember the successor state
-				closed.add(successor_state)
-	if not mute :
-		logging.info("No operators left. Task unsolvable.")
-		logging.info("%d Nodes expanded" % iteration)
-	return None
+        '''
+        Searches for a plan on the given task using breadth first search and
+        duplicate detection.
+        
+        @param planning_task: The planning task to solve.
+        @return: The solution as a list of operators or None if the task is
+        unsolvable.
+        '''
+        # counts the number of loops (only for printing)
+        iteration = 0
+        # fifo-queue storing the nodes which are next to explore
+        queue = deque()
+        queue.append(searchspace.make_root_node(planning_task.initial_state))
+        # set storing the explored nodes, used for duplicate detection
+        closed = {planning_task.initial_state}
+        while queue:
+                iteration += 1
+                if not mute: 
+                        logging.debug("breadth_first_search: Iteration %d, #unexplored=%d"
+                                        % (iteration, len(queue)))
+                # get the next node to explore
+                node = queue.popleft()
+                if not mute :
+                        logging.debug("breadth_first_search: f(n) = %f"%node.g )
+                # exploring the node or if it is a goal node extracting the plan
+        
+                if planning_task.goal_reached(node.state):
+                        if not mute :
+                                logging.info("Goal reached. Start extraction of solution.")
+                                logging.info("%d Nodes expanded" % iteration)
+                        return node.extract_solution()
+                for operator, successor_state in planning_task.get_successor_states( node.state):
+                        # duplicate detection
+                        if successor_state not in closed:
+                                queue.append(searchspace.make_child_node(node, operator,
+                                                                                successor_state))
+                                # remember the successor state
+                                closed.add(successor_state)
+        if not mute :
+                logging.info("No operators left. Task unsolvable.")
+                logging.info("%d Nodes expanded" % iteration)
+        return None
 
 def IW(planning_task, i):
     '''
@@ -93,9 +93,9 @@ def IW(planning_task, i):
                       % (iteration, len(queue)))
         # get the next node to explore
         node = queue.popleft()
-	logging.debug("breadth_first_search: f(n) = %f"%node.g )
+        logging.debug("breadth_first_search: f(n) = %f"%node.g )
         # exploring the node or if it is a goal node extracting the plan
-	
+        
         if planning_task.goal_reached(node.state):
             logging.info("Goal reached. Start extraction of solution.")
             logging.info("%d Nodes expanded" % iteration)
@@ -104,9 +104,9 @@ def IW(planning_task, i):
                                                                    node.state):
             # duplicate detection
             if successor_state not in closed:
-		n_s = novelty_h.evaluate_novelty( node.state.primary )
-		logging.debug( 'novelty(s) = {0}'.format( n_s ) )
-		if n_s > i : continue
+                n_s = novelty_h.evaluate_novelty( node.state.primary )
+                logging.debug( 'novelty(s) = {0}'.format( n_s ) )
+                if n_s > i : continue
                 queue.append(searchspace.make_child_node(node, operator,
                                                          successor_state))
                  # remember the successor state
