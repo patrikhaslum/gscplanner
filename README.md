@@ -181,6 +181,39 @@ The instance file format is the same as for the hbw3 domain.
 This domain model and driver script is in need of some updating.
 
 
+### PDDL with Axioms
+
+Planner for PDDL with axioms, treating derived predicates and axioms
+as the secondary model.
+
+Usage:
+
+	python pddl_with_axioms.py <domain> <problem> [config]
+
+Domain and problem files are standard PDDL. Axioms, and some ADL
+constructs, are supported, but action costs are not. The solver
+uses the translator component of
+[Fast Downward](http://www.fast-downward.org) (FD) to parse PDDL
+and convert it to ground SAS+ representation. Thus, the path to the
+FD translator must be in `PYTHONPATH` for this solver to run.
+If the domain has no derived prediates, the solver runs without
+a secondary model. Note, however, that the FD translator will
+sometimes create axioms in the internal representation even if the
+original domain does not have them, if the domain uses certain ADL
+constructs.
+
+The secondary model is an Answer Set Program (ASP), and it can be
+used to compute relaxation heuristics (h<sup>max</sup>, h+) as
+described in the paper "Optimal Planning with Axioms" (Franc Ivankovic
+and Patrik Haslum, IJCAI 2015). Only the "strong" relaxation (using
+ASP consistency to decide secondary conditions) is implemented.
+To test consistency of the ASP, the [clasp](https://potassco.org) ASP
+solver is used. It may work with other ASP solvers, as long as they
+read the same input format. Note that the path to the ASP solver is
+hardcoded (`AxiomModel.CLASP` in `src/ac/lp.py`) and may need to be
+changed.
+
+
 ## Alternative domain formulations
 
 In addition to domain models and instance files for the global state

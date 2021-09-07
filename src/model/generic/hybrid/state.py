@@ -15,6 +15,7 @@ class HybridState :
         total_time_optimize = 0
         total_time_model_building = 0
         models_created = 0
+        strong_relaxation = False
 
         def __init__(self, ps, lp, inactive ) :
 
@@ -69,7 +70,10 @@ class HybridState :
                 if self.secondary.status != 1 :
                         self.secondary.reset()
                 t0 = TIMER_FUN()
-                self.secondary.optimize()
+                if HybridState.strong_relaxation:
+                        self.secondary.optimize(self.primary)
+                else:
+                        self.secondary.optimize()
                 HybridState.calls_to_optimize += 1
                 HybridState.total_time_optimize += TIMER_FUN() - t0
                 #self.secondary.write( 'last_projected.lp' )

@@ -5,12 +5,13 @@ xrange = range
 
 class H_Max( Heuristic ) :
 
-        def __init__( self, the_task ) :
+        def __init__( self, the_task, verbose = False ) :
                 self.name = 'h_{max}'
                 self.task = the_task
                 # self.all_actions is an enumerable set of indices
                 # into self.task.actions[]
                 self.all_actions = frozenset( [ i for i in xrange( len( self.task.actions ) ) ] )
+                self.verbose = verbose
 
 
         def goal_reached( self, s ) :
@@ -54,6 +55,8 @@ class H_Max( Heuristic ) :
                         (act_idx, act_cost) = self.queue[0]
                         if act_cost > cost:
                                 return changed
+                        if self.verbose:
+                                print("(h_max) apply " + self.task.actions[act_idx].name)
                         for X, v in self.task.actions[act_idx].effect :
                                 if not self.rp_state.possible( [ (X, v) ] ) :
                                         self.rp_state.relaxed_set( X, v )
@@ -81,6 +84,9 @@ class H_Max( Heuristic ) :
                 while len(self.queue) > 0:
                         changed = self.dequeue_to_cost( h_value )
                         if changed :
+                                if self.verbose:
+                                        print("(h_max) relaxed state:")
+                                        self.rp_state.print_relaxed()
                                 if self.goal_reached( self.rp_state ):
                                         node.h = h_value                
                                         return h_value
@@ -89,5 +95,7 @@ class H_Max( Heuristic ) :
                         if len(self.queue) > 0:
                                 (act, cost) = self.queue[0]
                                 h_value = cost
+                                if self.verbose:
+                                        print("(h_max) h >= " + str(h_value))
                 node.h = float('inf')
                 return float('inf')
