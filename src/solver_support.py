@@ -70,7 +70,7 @@ def         solve_heuristic( task, search_fn, h, planner_name, succ_fn = None ) 
         #task.validate(the_plan)
         return the_plan
 
-configs = [  'blind', 'iw_1', 'iw_2', 'bfs_f_1', 'bfs_f_2', 'a_star_h0', 'a_star_hmax', 'a_star_hplus', 'ppa_star_hplus', 'ppa_star_hplus_r1', 'ppa_star_hmax', 'ppa_star_hplus_ngl','ppa_star_hplus_ngl2', 'restarting_ppa_star_hplus',
+configs = [  'blind', 'iw_1', 'iw_2', 'bfs_f_1', 'bfs_f_2', 'a_star_h0', 'a_star_hmax', 'a_star_hmax_r1', 'a_star_hplus', 'a_star_hplus_r1', 'ppa_star_hplus', 'ppa_star_hplus_r1', 'ppa_star_hmax', 'ppa_star_hplus_ngl','ppa_star_hplus_ngl2', 'restarting_ppa_star_hplus',
                 'delayed_eval_ppa_star_hplus', 'delayed_eval_ppa_star_hplus_ngl2', 'ppa_star_pdb_trivial', 'ppa_star_pdb_naive', 'ppa_star_pdb_haslum_aaai07', 'a_star_pdb_haslum_aaai07', 'ppa_star_pdb_haslum_aaai07_ngl',
                 'ppa_star_pdb_haslum_aaai07_ngl2'   ]
 
@@ -111,7 +111,17 @@ def solve( configuration, task ) :
                 solve_heuristic( task, search.astar_search, H_Zero(task), 'A* (h_0)' )
         elif configuration == 'a_star_hmax' :
                 solve_heuristic( task, search.astar_search, H_Max(task), 'A* (h_max)' )
+        elif configuration == 'a_star_hmax_r1' :
+                H_Max.meticulous = True
+                solve_heuristic( task, search.astar_search, H_Max(task), 'A* (h_max)' )
         elif configuration == 'a_star_hplus' :
+                hplus = H_Plus(task)
+                hplus.compute_pref_ops = False
+                solve_heuristic( task, search.astar_search, hplus, 'A* (h+)')
+                hplus.print_statistics()
+        elif configuration == 'a_star_hplus_r1' :
+                from heuristics.simple_rpg import RelaxedPlanningGraph
+                RelaxedPlanningGraph.meticulous = True
                 hplus = H_Plus(task)
                 hplus.compute_pref_ops = False
                 solve_heuristic( task, search.astar_search, hplus, 'A* (h+)')

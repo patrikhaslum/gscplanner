@@ -92,8 +92,11 @@ class Axioms(object):
                 sp_conds = list(self.task.actions[i].sec_precs)
                 sp_indices = set()
                 for cond in sp_conds:
-                    self.constraints.append(([], cond))
-                    sp_indices.add(len(self.constraints) - 1)
+                    ci = self._find_constraint(cond)
+                    if ci is None:
+                        self.constraints.append(([], cond))
+                        ci = len(self.constraints) - 1
+                    sp_indices.add(ci)
                 self.task.actions[i].sec_precs = sp_indices
         
         # create constraints for secondary goals, and store their indices
@@ -103,9 +106,28 @@ class Axioms(object):
                     for (var, val) in self.task.sas_task.goal.pairs
                     if var in self.task.secondary_var_map]
         for cond in sg_conds:
-            self.constraints.append(([], cond))
-            self.goal_constraints.add(len(self.constraints) - 1)
+            ci = self._find_constraint(cond)
+            if ci is None:
+                self.constraints.append(([], cond))
+                ci = len(self.constraints) - 1
+            self.goal_constraints.add(ci)
+        logging.info("goal state constraints: " + str(self.goal_constraints))
+
+        ## HACK!
+        self.global_state_constraints = self.goal_constraints.copy()
+        for i in range(len(self.task.actions)):
+            logging.info("action " + self.task.actions[i].name + " secondary precs: " + str(self.task.actions[i].sec_precs))
+            self.global_state_constraints = self.global_state_constraints & self.task.actions[i].sec_precs
+        logging.info("found global state constraints: " + str(self.global_state_constraints))
+        
         self.model = AxiomModel(self)
+
+    def _find_constraint(self, dcond):
+        for i, tc in enumerate(self.constraints):
+            trigger, constr = tc
+            if constr == dcond:
+                return i
+        return None
 
     def copy(self) :
         assert False
@@ -192,7 +214,7 @@ class AxiomModel:
         # Collect the active requiremens:
         reqs = []
         for i in range(len(self.myLP.constraints)):
-            if self.active[i]:
+            if self.active[i] or (i in self.myLP.global_state_constraints):
                 t, c = self.myLP.constraints[i]
                 var, val = c
                 reqs.append(c)
@@ -304,7 +326,7 @@ class AxiomModel:
                 for other_atom in atoms:
                     if other_atom != atom:
                         print(other_atom + 2, end=' ', file=fto)
-            print(file=fto)
+                print(file=fto)
 
     def write_basic_rule(self, fto, head, neg_body, pos_body):
         print(1, head + 2, len(neg_body) + len(pos_body), len(neg_body), end=' ', file=fto)
@@ -319,7 +341,7 @@ class AxiomModel:
                 logging.debug( 'calling ' + AxiomModel.CLASP + ' ' + filename + ' ...' )
                 result = subprocess.run([AxiomModel.CLASP, filename], capture_output = True, text = True, timeout = None)
             else:
-                logging.debug( 'calling ' + AxiomModel.CLASP + ' ...' )
+                logging.debug( 'calling ' + AxiomModel.CLASP + ' with input ' + text_in )
                 result = subprocess.run([AxiomModel.CLASP], input=text_in, capture_output = True, text = True, timeout = None)
         except subprocess.TimeoutExpired as tx:
             logging.error( 'Call ' + AxiomModel.CLASP + ' ' + filename + ' timed out' )
@@ -327,6 +349,7 @@ class AxiomModel:
         except subprocess.CalledProcessError as cpe:
             logging.error( 'Call ' + AxiomModel.CLASP + ' ' + filename + ' caused error ' + str(cpe) )
             return None
+        logging.debug( 'call result: ' + str(result) )
         for line in result.stdout.split('\n'):
             if line == 'SATISFIABLE':
                 return True

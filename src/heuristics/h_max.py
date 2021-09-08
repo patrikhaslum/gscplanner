@@ -4,6 +4,7 @@ from .simple_rpg                        import  RelaxedPlanningGraph
 xrange = range
 
 class H_Max( Heuristic ) :
+        meticulous = False
 
         def __init__( self, the_task, verbose = False ) :
                 self.name = 'h_{max}'
@@ -45,7 +46,14 @@ class H_Max( Heuristic ) :
                         if (len( action.sec_precs ) != 0):
                                 if not self.task.check_secondary_precondition( self.rp_state, action ) :
                                         continue
+                        if self.meticulous:
+                                # check post-condition validity
+                                post_valid = self.task.check_postcondition_validity( self.rp_state, action )
+                                if not post_valid :
+                                        continue
                         self.available[idx] = False
+                        if self.verbose:
+                                print("(h_max) applicable " + self.task.actions[idx].name + " at cost " + str(pre_cost + action.cost))
                         self.enqueue( idx, pre_cost + action.cost )
 
 
@@ -81,6 +89,9 @@ class H_Max( Heuristic ) :
                 if True in self.available:
                         self.check_and_enqueue( 0 )
                 h_value = 0
+                if self.verbose:
+                        print("(h_max) initial state:")
+                        self.rp_state.print_relaxed()
                 while len(self.queue) > 0:
                         changed = self.dequeue_to_cost( h_value )
                         if changed :
