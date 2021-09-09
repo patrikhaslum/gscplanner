@@ -14,7 +14,8 @@ Patrik Haslum, ICAPS 2019).
 
 ## Setup
 
-The planner requries python 2 (probably version 2.7 or later).
+**NEW** The planner has been updated to work with python 3 (tested
+with python3.8, but will probably run with anything from 3.4 on).
 
 The hbw, linehaul and counters domain models need an LP solver; the
 h+ heuristic implementation needs a MIP solver. The code is written
